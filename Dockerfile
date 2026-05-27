@@ -32,6 +32,13 @@ COPY package.json .
 RUN npm install --omit=dev --no-audit --no-fund
 COPY server.js .
 
+# Create non-root user so Chrome's zygote sandbox accepts the default profile
+# (Chromium refuses to run as root without --no-sandbox, and gsd-browser CLI
+# has no flag to pass that arg through.)
+RUN useradd --create-home --shell /bin/bash gsd \
+    && chown -R gsd:gsd /app
+USER gsd
+
 EXPOSE 8788
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
     CMD curl -sf http://localhost:8788/healthz || exit 1
