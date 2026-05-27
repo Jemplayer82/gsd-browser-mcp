@@ -4,7 +4,6 @@ FROM node:22-trixie-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     chromium \
-    chromium-sandbox \
     curl \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
@@ -27,6 +26,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install gsd-browser binary
 RUN curl -fsSL https://github.com/gsd-build/gsd-browser/releases/download/v0.1.25/gsd-browser-linux-x64 \
     -o /usr/local/bin/gsd-browser && chmod +x /usr/local/bin/gsd-browser
+
+# Wrapper script that forces Chrome flags needed inside Docker.
+# gsd-browser's TOML config exposes browser.path but not extra args,
+# so we wrap chromium and bake the flags in.
+RUN printf '#!/bin/sh\nexec /usr/bin/chromium --no-sandbox --disable-dev-shm-usage --disable-gpu "$@"\n' \
+    > /usr/local/bin/chromium-wrapper \
+    && chmod +x /usr/local/bin/chromium-wrapper
 
 WORKDIR /app
 COPY package.json .

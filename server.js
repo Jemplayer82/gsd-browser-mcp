@@ -16,14 +16,16 @@ if (!USER_TOKEN) {
   process.exit(1);
 }
 
-// Write gsd-browser config for headless + no-sandbox (needed in Docker)
+// Write gsd-browser config pointing at the chromium-wrapper script.
+// gsd-browser's TOML schema only exposes browser.path (not extra args),
+// so the wrapper bakes in --no-sandbox + other Docker-required flags.
 async function writeGsdBrowserConfig() {
   const configDir = join(homedir(), ".gsd-browser");
   await mkdir(configDir, { recursive: true });
   const configPath = join(configDir, "config.toml");
   const content = `[browser]
+path = "/usr/local/bin/chromium-wrapper"
 headless = true
-args = ["--no-sandbox", "--disable-dev-shm-usage", "--disable-setuid-sandbox", "--disable-gpu"]
 `;
   await writeFile(configPath, content, "utf-8");
 }
