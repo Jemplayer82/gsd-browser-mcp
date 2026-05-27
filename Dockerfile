@@ -2,6 +2,7 @@ FROM node:22-slim
 
 # Install Chromium and required system libs
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     chromium \
     curl \
     libatk-bridge2.0-0 \
