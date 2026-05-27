@@ -4,6 +4,7 @@ FROM node:22-trixie-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     chromium \
+    chromium-sandbox \
     curl \
     libatk-bridge2.0-0 \
     libatk1.0-0 \
