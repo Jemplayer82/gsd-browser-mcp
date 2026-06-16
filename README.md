@@ -1,21 +1,27 @@
-# gsd-browser-mcp
+<img src="assets/fathom-header-banner.svg" alt="Fathom Works — gsd-browser-mcp" width="100%">
 
-A self-hosted MCP (Model Context Protocol) server that gives Claude and other AI clients the ability to browse the web using a headless Chrome instance running in Docker. Built on top of [gsd-browser](https://github.com/open-gsd/gsd-browser).
+# `$ gsd-browser-mcp`
 
-## What it does
+**A self-hosted MCP (Model Context Protocol) server that gives Claude and other AI clients the ability to browse the web using a headless Chrome instance running in Docker.** Built on top of [gsd-browser](https://github.com/open-gsd/gsd-browser).
+
+---
+
+## `[ what it does ]`
 
 - Runs Chromium in a Docker container
 - Exposes a single MCP tool (`gsd_browser_run`) over HTTP on port **8788**
 - Lets your AI client navigate pages, take screenshots, click elements, fill forms, and run JavaScript — all through the remote browser
 
-## Quick Start
+---
 
-### 1. Clone and configure
+## `[ quick start ]`
+
+### 1. clone and configure
 
 ```bash
-git clone https://github.com/Jemplayer82/gsd-browser-mcp.git
-cd gsd-browser-mcp
-cp .env.example .env
+$ git clone https://github.com/Jemplayer82/gsd-browser-mcp.git
+$ cd gsd-browser-mcp
+$ cp .env.example .env
 ```
 
 Edit `.env` and set a secret token:
@@ -24,15 +30,15 @@ Edit `.env` and set a secret token:
 GSD_BROWSER_MCP_TOKEN=your-secret-token-here
 ```
 
-### 2. Start the container
+### 2. start the container
 
 ```bash
-docker compose up -d
+$ docker compose up -d
 ```
 
 The server starts on port **8788** with a health check at `/healthz`.
 
-### 3. Connect your MCP client
+### 3. connect your mcp client
 
 Point your MCP client at:
 
@@ -46,7 +52,9 @@ Authenticate with a Bearer token header:
 Authorization: Bearer your-secret-token-here
 ```
 
-## How to use the tool
+---
+
+## `[ how to use the tool ]`
 
 The server exposes one tool: **`gsd_browser_run`**
 
@@ -63,7 +71,9 @@ eval "document.title"
 
 Screenshots are returned as base64-encoded PNG images.
 
-## Docker Compose (full example)
+---
+
+## `[ docker compose ]`
 
 ```yaml
 services:
@@ -76,13 +86,17 @@ services:
     restart: unless-stopped
 ```
 
-## Environment Variables
+---
+
+## `[ environment variables ]`
 
 | Variable | Required | Description |
 |---|---|---|
 | `GSD_BROWSER_MCP_TOKEN` | Yes | Bearer token used to authenticate MCP requests |
 
-## Architecture
+---
+
+## `[ architecture ]`
 
 - **Base image:** `node:22-trixie-slim` with Chromium and required system libraries
 - **Browser binary:** `gsd-browser` v0.1.25 (downloaded at build time from GitHub releases)
@@ -91,12 +105,20 @@ services:
 
 Each MCP tool call spawns a `gsd-browser` child process with the supplied arguments and streams back the result.
 
-## Requirements
+---
+
+## `[ requirements ]`
 
 - Docker and Docker Compose
 - Port 8788 available on the host
 
-## Related
+---
+
+## `[ related ]`
 
 - [gsd-browser](https://github.com/open-gsd/gsd-browser) — the headless Chrome CLI tool this wraps
 - [gsd-gateway](https://github.com/Jemplayer82/gsd-gateway) — companion gateway for connecting through a cloud MCP endpoint
+
+---
+
+<img src="assets/fathom-footer-banner.svg" alt="Fathom Works — sound the depths before you set a course" width="100%">
