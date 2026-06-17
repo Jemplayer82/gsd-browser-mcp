@@ -1,4 +1,4 @@
-FROM node:22-trixie-slim
+FROM node:24-trixie-slim
 
 # Install Chromium and required system libs
 RUN apt-get update && apt-get install -y --no-install-recommends \

@@ -98,7 +98,7 @@ services:
 
 ## `[ architecture ]`
 
-- **Base image:** `node:22-trixie-slim` with Chromium and required system libraries
+- **Base image:** `node:24-trixie-slim` with Chromium and required system libraries
 - **Browser binary:** `gsd-browser` v0.1.25 (downloaded at build time from GitHub releases)
 - **Runtime:** Node.js server using `@modelcontextprotocol/sdk`
 - **Security:** Runs as a non-root `gsd` user; Chromium runs with `--no-sandbox` and `--disable-dev-shm-usage` for Docker compatibility
